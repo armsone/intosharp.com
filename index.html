@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f1e8">
+  <meta name="description" content="검색과 자주 가는 사이트를 한 화면에 모은 intoSharp 시작 페이지">
+  <title>intoSharp — 시작</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#shortcuts">바로가기로 건너뛰기</a>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="intoSharp 처음으로">
+      <span class="brand-mark" aria-hidden="true">#</span>
+      <span>intoSharp</span>
+    </a>
+    <div class="topbar-right">
+      <time id="clock" aria-label="현재 시각"></time>
+      <button class="icon-button" id="themeToggle" type="button" aria-label="어두운 화면으로 전환">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6 7 7m10 10 1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="greeting">
+      <p class="eyebrow">YOUR QUIET START PAGE</p>
+      <h1 id="greeting">좋은 새벽이에요.</h1>
+      <p class="hero-copy">어디로 갈까요?</p>
+
+      <form class="search" id="searchForm" role="search" autocomplete="off">
+        <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3m2.3-5.2a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"/></svg>
+        <label class="sr-only" for="commandInput">사이트 이동 또는 검색</label>
+        <input id="commandInput" name="q" type="search" enterkeyhint="go" autofocus
+          placeholder="사이트 이름이나 검색어를 입력하세요" aria-describedby="searchHelp">
+        <kbd>Enter</kbd>
+      </form>
+      <p class="search-help" id="searchHelp">
+        <button type="button" data-example="네이버">네이버</button>는 바로 이동,
+        <button type="button" data-example="네이버 우리집">네이버 우리집</button>은 검색
+      </p>
+    </section>
+
+    <section class="quick-row" aria-label="가장 자주 가는 사이트">
+      <a href="https://www.naver.com/" data-name="네이버"><span class="quick-icon naver">N</span><span>네이버</span></a>
+      <a href="https://www.youtube.com/?gl=KR" data-name="유튜브"><span class="quick-icon youtube">▶</span><span>유튜브</span></a>
+      <a href="https://chatgpt.com/" data-name="ChatGPT"><span class="quick-icon chatgpt">◎</span><span>ChatGPT</span></a>
+      <a href="https://gemini.google.com/" data-name="Gemini"><span class="quick-icon gemini">✦</span><span>Gemini</span></a>
+      <a href="https://web.telegram.org/" data-name="텔레그램"><span class="quick-icon telegram">↗</span><span>텔레그램</span></a>
+      <a href="https://appstoreconnect.apple.com/" data-name="App Store Connect"><span class="quick-icon appstore">A</span><span>App Store</span></a>
+    </section>
+
+    <section class="shortcuts" id="shortcuts" aria-labelledby="shortcutsTitle">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">BOOKMARKS, REFINED</p>
+          <h2 id="shortcutsTitle">바로가기</h2>
+        </div>
+        <div class="filters" role="group" aria-label="바로가기 분류">
+          <button class="active" type="button" data-filter="all" aria-pressed="true">전체</button>
+          <button type="button" data-filter="work" aria-pressed="false">업무</button>
+          <button type="button" data-filter="hantong" aria-pressed="false">한통</button>
+          <button type="button" data-filter="media" aria-pressed="false">읽기·미디어</button>
+          <button type="button" data-filter="tools" aria-pressed="false">도구</button>
+        </div>
+      </div>
+
+      <div class="grid" id="bookmarkGrid">
+        <article class="group" data-category="work">
+          <div class="group-title"><span class="dot coral"></span><h3>업무</h3><span>5</span></div>
+          <div class="link-list">
+            <a href="https://sell.smartstore.naver.com/"><span class="site-mark">SS</span><span><strong>스마트스토어센터</strong><small>상품과 주문 관리</small></span><span class="arrow">↗</span></a>
+            <a href="https://partner.talk.naver.com/"><span class="site-mark">톡</span><span><strong>네이버 톡톡</strong><small>고객 상담</small></span><span class="arrow">↗</span></a>
+            <a href="https://payapp.kr/"><span class="site-mark">PA</span><span><strong>페이앱</strong><small>결제 관리</small></span><span class="arrow">↗</span></a>
+            <a href="https://unipost.co.kr/"><span class="site-mark">UP</span><span><strong>유니포스트</strong><small>전자증빙</small></span><span class="arrow">↗</span></a>
+            <a href="https://members.iparking.co.kr/"><span class="site-mark">P</span><span><strong>아이파킹</strong><small>매장 주차 관리</small></span><span class="arrow">↗</span></a>
+          </div>
+        </article>
+
+        <article class="group" data-category="hantong">
+          <div class="group-title"><span class="dot green"></span><h3>한통도시락</h3><span>5</span></div>
+          <div class="link-list">
+            <a href="https://smartstore.naver.com/hantongbox"><span class="site-mark">한</span><span><strong>한통 스토어</strong><small>네이버 스마트스토어</small></span><span class="arrow">↗</span></a>
+            <a href="https://blog.naver.com/hantongbox"><span class="site-mark">B</span><span><strong>한통 블로그</strong><small>소식과 이야기</small></span><span class="arrow">↗</span></a>
+            <a href="https://www.instagram.com/hantongbox/"><span class="site-mark">IG</span><span><strong>한통 Instagram</strong><small>@hantongbox</small></span><span class="arrow">↗</span></a>
+            <a href="https://www.youtube.com/@hantongbox/"><span class="site-mark">YT</span><span><strong>한통 YouTube</strong><small>영상 채널</small></span><span class="arrow">↗</span></a>
+            <a href="https://tv.naver.com/hantongbox"><span class="site-mark">TV</span><span><strong>한통 네이버TV</strong><small>네이버 영상 채널</small></span><span class="arrow">↗</span></a>
+          </div>
+        </article>
+
+        <article class="group" data-category="media">
+          <div class="group-title"><span class="dot blue"></span><h3>읽기·미디어</h3><span>6</span></div>
+          <div class="link-list">
+            <a href="https://www.clien.net/service/"><span class="site-mark">C</span><span><strong>클리앙</strong><small>커뮤니티</small></span><span class="arrow">↗</span></a>
+            <a href="https://www.youtube.com/?gl=KR"><span class="site-mark">YT</span><span><strong>YouTube</strong><small>영상</small></span><span class="arrow">↗</span></a>
+            <a href="https://www.netflix.com/kr/"><span class="site-mark">N</span><span><strong>Netflix</strong><small>영화와 시리즈</small></span><span class="arrow">↗</span></a>
+            <a href="https://www.justwatch.com/kr"><span class="site-mark">JW</span><span><strong>JustWatch</strong><small>스트리밍 검색</small></span><span class="arrow">↗</span></a>
+            <a href="https://feedly.com/"><span class="site-mark">F</span><span><strong>Feedly</strong><small>RSS 리더</small></span><span class="arrow">↗</span></a>
+            <a href="https://photos.google.com/"><span class="site-mark">GP</span><span><strong>Google Photos</strong><small>사진 보관함</small></span><span class="arrow">↗</span></a>
+          </div>
+        </article>
+
+        <article class="group" data-category="tools">
+          <div class="group-title"><span class="dot violet"></span><h3>도구</h3><span>6</span></div>
+          <div class="link-list">
+            <a href="https://chatgpt.com/"><span class="site-mark">AI</span><span><strong>ChatGPT</strong><small>대화형 AI</small></span><span class="arrow">↗</span></a>
+            <a href="https://gemini.google.com/"><span class="site-mark">✦</span><span><strong>Gemini</strong><small>Google AI</small></span><span class="arrow">↗</span></a>
+            <a href="https://github.com/louzkk/Ghost-Optimizer/releases"><span class="site-mark">GH</span><span><strong>Ghost Optimizer</strong><small>GitHub 릴리스</small></span><span class="arrow">↗</span></a>
+            <a href="https://appstoreconnect.apple.com/"><span class="site-mark">AS</span><span><strong>App Store Connect</strong><small>앱 관리</small></span><span class="arrow">↗</span></a>
+            <a href="https://www.icloud.com/"><span class="site-mark">iC</span><span><strong>iCloud</strong><small>Apple 클라우드</small></span><span class="arrow">↗</span></a>
+            <a href="https://www.google.com/"><span class="site-mark">G</span><span><strong>Google 검색</strong><small>웹 검색</small></span><span class="arrow">↗</span></a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>intoSharp</span><span>내 시작은, 조금 더 선명하게.</span></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>

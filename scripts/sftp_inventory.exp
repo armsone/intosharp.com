@@ -1,0 +1,60 @@
+#!/usr/bin/expect -f
+
+set timeout 30
+set project_root [file normalize [file join [file dirname [info script]] ..]]
+set secret_file [file join $project_root .secrets hosting.env]
+set output_file [file join $project_root .private hosting-tree-raw.txt]
+set known_hosts [file join $project_root .private known_hosts]
+
+set handle [open $secret_file r]
+set password ""
+while {[gets $handle line] >= 0} {
+    if {[string match "FTP_PASSWORD=*" $line]} {
+        set password [string range $line 13 end]
+    }
+}
+close $handle
+
+if {$password eq ""} {
+    puts stderr "FTP_PASSWORD가 없습니다."
+    exit 1
+}
+
+file mkdir [file dirname $output_file]
+log_user 0
+log_file -noappend $output_file
+spawn ssh -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=$known_hosts -o PreferredAuthentications=password -o PubkeyAuthentication=no intosharp@intosharp.com "ls -laR ."
+
+expect {
+    -re "(?i)password:" {
+        send -- "$password\r"
+        log_user 1
+    }
+    eof {
+        catch wait result
+        puts stderr "SFTP/SSH 로그인 전에 연결이 종료되었습니다."
+        exit [lindex $result 3]
+    }
+    timeout {
+        puts stderr "SFTP/SSH 로그인 대기 시간이 초과되었습니다."
+        exit 1
+    }
+}
+
+expect {
+    eof {
+        catch wait result
+        set status [lindex $result 3]
+        if {$status != 0} {
+            puts stderr "SFTP/SSH 파일 목록 조회에 실패했습니다(종료 코드 $status)."
+            exit $status
+        }
+    }
+    timeout {
+        puts stderr "SFTP/SSH 파일 목록 조회 시간이 초과되었습니다."
+        exit 1
+    }
+}
+
+file attributes $output_file -permissions 0600
+puts "SFTP/SSH 파일 목록을 읽기 전용으로 저장했습니다."

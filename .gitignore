@@ -1,0 +1,8 @@
+# 인투샵 운영 비밀정보와 서버 조사 결과는 외부 저장소에 올리지 않는다.
+.secrets/
+.private/
+.intosharp-data/
+
+# 로컬 도구 산출물
+__pycache__/
+*.pyc
