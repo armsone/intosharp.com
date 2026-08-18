@@ -1,14 +1,15 @@
-const CACHE_NAME = 'intosh-shell-20260816-17';
+const CACHE_NAME = 'intosh-shell-20260819-18';
 const SHELL_FILES = [
   '/',
-  '/favicon.svg',
+  '/favicon-32.png',
   '/apple-touch-icon.png',
   '/icon-192.png',
   '/icon-512.png',
+  '/assets/intosharp-representative.png',
   '/legacy-catalog.js?v=20260816-3',
   '/admin.js?v=20260816-20',
   '/modern.js?v=20260816-1',
-  '/manifest.json?v=20260816-2',
+  '/manifest.json?v=20260819-1',
 ];
 
 self.addEventListener('install', event => {

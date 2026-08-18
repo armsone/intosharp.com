@@ -20,9 +20,11 @@ UPLOADS = (
     (PROJECT_ROOT / "admin.js", "www/admin.js"),
     (PROJECT_ROOT / "admin-api.php", "www/admin-api.php"),
     (PROJECT_ROOT / "favicon.svg", "www/favicon.svg"),
+    (PROJECT_ROOT / "favicon-32.png", "www/favicon-32.png"),
     (PROJECT_ROOT / "apple-touch-icon.png", "www/apple-touch-icon.png"),
     (PROJECT_ROOT / "icon-192.png", "www/icon-192.png"),
     (PROJECT_ROOT / "icon-512.png", "www/icon-512.png"),
+    (PROJECT_ROOT / "assets" / "intosharp-representative.png", "www/assets/intosharp-representative.png"),
     (PROJECT_ROOT / "modern.js", "www/modern.js"),
     (PROJECT_ROOT / "sw.js", "www/sw.js"),
     (PROJECT_ROOT / "manifest.json", "www/manifest.json"),
@@ -56,6 +58,11 @@ def main() -> int:
 
     sftp = client.open_sftp()
     try:
+        try:
+            sftp.stat("www/assets")
+        except FileNotFoundError:
+            sftp.mkdir("www/assets")
+
         for local, remote in UPLOADS:
             temporary = f"{remote}.uploading"
             sftp.put(str(local), temporary)

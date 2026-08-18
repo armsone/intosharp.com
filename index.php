@@ -9,9 +9,24 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="description" content="주소 대신 이름으로 이어지는 인투샾 첫 화면">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:site_name" content="인투샾">
+  <meta property="og:title" content="#인투샾 — 이름으로 여는 첫 화면">
+  <meta property="og:description" content="주소 대신 이름으로 이어지는 인투샾 첫 화면">
+  <meta property="og:url" content="https://intosharp.com/">
+  <meta property="og:image" content="https://intosharp.com/assets/intosharp-representative.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="코랄색 해시태그에서 검색과 바로가기 카드가 이어지는 인투샾 대표 이미지">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="#인투샾 — 이름으로 여는 첫 화면">
+  <meta name="twitter:description" content="주소 대신 이름으로 이어지는 인투샾 첫 화면">
+  <meta name="twitter:image" content="https://intosharp.com/assets/intosharp-representative.png">
+  <link rel="canonical" href="https://intosharp.com/">
+  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-  <link rel="manifest" href="/manifest.json?v=20260816-2">
+  <link rel="manifest" href="/manifest.json?v=20260819-1">
   <title>#인투샾 — 이름으로 여는 첫 화면</title>
   <style>
     :root {
@@ -202,6 +217,7 @@
 
     .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
     .card {
+      min-width: 0;
       padding: 24px; border: 1px solid var(--line); border-radius: var(--radius);
       background: var(--card); box-shadow: 0 8px 30px rgba(58, 49, 36, .04);
       container-type: inline-size;
