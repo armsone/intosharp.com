@@ -40,6 +40,7 @@
   let dragArmed = null;
   let dragTarget = null;
   let suppressClickUntil = 0;
+  let saveQueue = Promise.resolve();
 
   function showToast(message) {
     toast.textContent = message;
@@ -147,15 +148,19 @@
       card.dataset.groupId = group.id;
       const header = document.createElement('header');
       header.className = 'card-head';
-      if (authenticated) {
-        header.dataset.dragType = 'group';
-        header.dataset.groupId = group.id;
-        header.draggable = true;
-        header.tabIndex = 0;
-        header.title = '묶음 머리 부분을 잡아서 이동';
-      }
       const titleWrap = document.createElement('div');
       titleWrap.className = 'card-title';
+      if (authenticated) {
+        const dragHandle = document.createElement('button');
+        dragHandle.type = 'button';
+        dragHandle.className = 'admin-drag-handle';
+        dragHandle.textContent = '⠿';
+        dragHandle.dataset.dragType = 'group';
+        dragHandle.dataset.groupId = group.id;
+        dragHandle.setAttribute('aria-label', `${group.title} 패널 순서 이동`);
+        dragHandle.title = '끌어서 이동 · 위아래 화살표 키로 이동';
+        titleWrap.appendChild(dragHandle);
+      }
       const dot = document.createElement('span');
       dot.className = `dot${group.tone ? ` ${group.tone}` : ''}`;
       const title = document.createElement('h3');
@@ -176,10 +181,16 @@
         const groupControls = document.createElement('div');
         groupControls.className = 'admin-controls group-controls';
         groupControls.dataset.groupId = group.id;
+        const moveUp = controlButton('↑', 'group-move-up', `${group.title} 패널을 위로 이동`);
+        const moveDown = controlButton('↓', 'group-move-down', `${group.title} 패널을 아래로 이동`);
+        moveUp.disabled = groupIndex === 0;
+        moveDown.disabled = groupIndex === state.groups.length - 1;
         const addSite = controlButton('＋', 'site-add', `${group.title}에 사이트 추가`);
         const removeGroup = controlButton('×', 'group-delete', `${group.title} 삭제`);
         removeGroup.classList.add('admin-danger');
         groupControls.append(
+          moveUp,
+          moveDown,
           addSite,
           removeGroup,
         );
@@ -189,7 +200,7 @@
       const list = document.createElement('div');
       list.className = 'link-list';
       list.id = group.id;
-      group.sites.forEach(site => {
+      group.sites.forEach((site, siteIndex) => {
         const link = makeSiteLink(site, group.title);
         if (!authenticated) {
           list.appendChild(link);
@@ -199,22 +210,36 @@
         row.className = 'admin-site-row';
         row.dataset.groupId = group.id;
         row.dataset.siteId = site.id;
-        row.dataset.dragType = 'site';
         row.dataset.adminAction = 'site-edit';
-        row.draggable = true;
         row.tabIndex = 0;
-        row.title = '한 번 클릭하여 수정 · 패널을 잡아서 이동';
+        row.title = '한 번 클릭하여 수정 · 손잡이를 잡거나 위아래 화살표 키로 이동';
+        const dragHandle = document.createElement('button');
+        dragHandle.type = 'button';
+        dragHandle.className = 'admin-drag-handle';
+        dragHandle.textContent = '⠿';
+        dragHandle.dataset.dragType = 'site';
+        dragHandle.dataset.groupId = group.id;
+        dragHandle.dataset.siteId = site.id;
+        dragHandle.setAttribute('aria-label', `${site.name} 순서 이동`);
+        dragHandle.title = '끌어서 이동 · 위아래 화살표 키로 이동';
+        row.appendChild(dragHandle);
         row.append(link);
         const controls = document.createElement('div');
         controls.className = 'admin-controls site-controls';
         controls.dataset.groupId = group.id;
         controls.dataset.siteId = site.id;
+        const moveUp = controlButton('↑', 'site-move-up', `${site.name}을 위로 이동`);
+        const moveDown = controlButton('↓', 'site-move-down', `${site.name}을 아래로 이동`);
+        moveUp.disabled = siteIndex === 0;
+        moveDown.disabled = siteIndex === group.sites.length - 1;
         const welcome = controlButton('★', 'site-welcome', `${site.name}을 마중말에 ${site.welcome ? '내리기' : '올리기'}`);
         welcome.classList.add('admin-star');
         welcome.classList.toggle('active', Boolean(site.welcome));
         const remove = controlButton('×', 'site-delete', `${site.name} 삭제`);
         remove.classList.add('admin-danger');
         controls.append(
+          moveUp,
+          moveDown,
           remove,
           welcome,
         );
@@ -295,21 +320,33 @@
     renderAdminChrome();
   }
 
-  async function saveMutation(change) {
-    const previous = JSON.parse(JSON.stringify(state));
-    change();
-    cleanupActivity();
-    renderAll();
-    try {
-      const result = await api('save', { state });
-      state = result.state;
+  function saveMutation(change) {
+    const save = async () => {
+      const previous = JSON.parse(JSON.stringify(state));
+      change();
+      cleanupActivity();
       renderAll();
-      showToast('변경 내용을 저장했습니다.');
-    } catch (error) {
-      state = previous;
-      renderAll();
-      showToast(error.message);
-    }
+      try {
+        const result = await api('save', { state });
+        state = result.state;
+        renderAll();
+        showToast('변경 내용을 저장했습니다.');
+      } catch (error) {
+        state = previous;
+        renderAll();
+        showToast(error.message);
+      }
+    };
+    const queued = saveQueue.then(save, save);
+    saveQueue = queued.catch(() => {});
+    return queued;
+  }
+
+  function restoreReorderFocus(type, groupId, siteId = '') {
+    const selector = type === 'group'
+      ? `.admin-drag-handle[data-drag-type="group"][data-group-id="${CSS.escape(groupId)}"]`
+      : `.admin-drag-handle[data-drag-type="site"][data-group-id="${CSS.escape(groupId)}"][data-site-id="${CSS.escape(siteId)}"]`;
+    document.querySelector(selector)?.focus();
   }
 
   function normalizeUrl(raw) {
@@ -389,6 +426,17 @@
     if (groupIndex < 0) return;
     const group = state.groups[groupIndex];
 
+    if (action === 'group-move-up' || action === 'group-move-down') {
+      const destination = groupIndex + (action === 'group-move-up' ? -1 : 1);
+      if (destination < 0 || destination >= state.groups.length) return;
+      await saveMutation(() => {
+        const moved = state.groups.splice(groupIndex, 1)[0];
+        state.groups.splice(destination, 0, moved);
+      });
+      restoreReorderFocus('group', groupId);
+      return;
+    }
+
     if (action === 'group-edit') {
       const title = window.prompt('묶음 이름', group.title)?.trim();
       if (title && title !== group.title) await saveMutation(() => { group.title = title.slice(0, 60); });
@@ -411,6 +459,17 @@
 
     const found = groupAndSite(groupId, siteId);
     if (!found.site) return;
+
+    if (action === 'site-move-up' || action === 'site-move-down') {
+      const destination = found.siteIndex + (action === 'site-move-up' ? -1 : 1);
+      if (destination < 0 || destination >= group.sites.length) return;
+      await saveMutation(() => {
+        const moved = group.sites.splice(found.siteIndex, 1)[0];
+        group.sites.splice(destination, 0, moved);
+      });
+      restoreReorderFocus('site', groupId, siteId);
+      return;
+    }
 
     if (action === 'site-welcome') {
       await saveMutation(() => { found.site.welcome = !found.site.welcome; });
@@ -446,6 +505,7 @@
 
   function beginDrag(event) {
     if (!authenticated) return;
+    if (event.isPrimary === false || (event.pointerType === 'mouse' && event.button !== 0)) return;
     const handle = event.target.closest('[data-drag-type]');
     if (!handle) return;
     if (event.target.closest('.site-controls, .group-controls')) return;
@@ -518,10 +578,12 @@
       if (payload.groupId === targetCard.dataset.groupId) return;
       saveMutation(() => {
         const sourceIndex = state.groups.findIndex(group => group.id === payload.groupId);
-        if (sourceIndex < 0) return;
+        const targetOriginalIndex = state.groups.findIndex(group => group.id === targetCard.dataset.groupId);
+        if (sourceIndex < 0 || targetOriginalIndex < 0) return;
+        const insertAfter = sourceIndex < targetOriginalIndex;
         const moved = state.groups.splice(sourceIndex, 1)[0];
         const targetIndex = state.groups.findIndex(group => group.id === targetCard.dataset.groupId);
-        state.groups.splice(targetIndex + (placeAfter ? 1 : 0), 0, moved);
+        state.groups.splice(targetIndex + (insertAfter ? 1 : 0), 0, moved);
       }).catch(error => showToast(error.message));
       return;
     }
@@ -532,16 +594,14 @@
     saveMutation(() => {
       const destination = state.groups.find(group => group.id === targetCard.dataset.groupId);
       if (!destination) return;
-      const targetOriginalIndex = targetRow ? destination.sites.findIndex(site => site.id === targetRow.dataset.siteId) : -1;
-      const movingForwardInGroup = sourceGroup === destination && sourceIndex < targetOriginalIndex;
       const moved = sourceGroup.sites.splice(sourceIndex, 1)[0];
       if (!targetRow) {
         destination.sites.push(moved);
         return;
       }
       const targetIndex = destination.sites.findIndex(site => site.id === targetRow.dataset.siteId);
-      const insertAfter = sourceGroup === destination ? movingForwardInGroup : placeAfter;
-      destination.sites.splice(targetIndex + (insertAfter ? 1 : 0), 0, moved);
+      if (targetIndex < 0) return;
+      destination.sites.splice(targetIndex + (placeAfter ? 1 : 0), 0, moved);
     }).catch(error => showToast(error.message));
   }
 
@@ -549,9 +609,6 @@
   document.addEventListener('pointermove', moveDrag);
   document.addEventListener('pointerup', finishDrag);
   document.addEventListener('pointercancel', clearDragState);
-  document.addEventListener('mousedown', beginDrag, { capture: true });
-  document.addEventListener('mousemove', moveDrag);
-  document.addEventListener('mouseup', finishDrag);
 
   document.addEventListener('keydown', event => {
     if (!authenticated || !['ArrowUp', 'ArrowDown'].includes(event.key)) return;
@@ -566,7 +623,7 @@
       saveMutation(() => {
         const moved = state.groups.splice(index, 1)[0];
         state.groups.splice(destination, 0, moved);
-      }).catch(error => showToast(error.message));
+      }).then(() => restoreReorderFocus('group', handle.dataset.groupId));
       return;
     }
     const group = state.groups.find(item => item.id === handle.dataset.groupId);
@@ -576,7 +633,7 @@
     saveMutation(() => {
       const moved = group.sites.splice(index, 1)[0];
       group.sites.splice(destination, 0, moved);
-    }).catch(error => showToast(error.message));
+    }).then(() => restoreReorderFocus('site', handle.dataset.groupId, handle.dataset.siteId));
   });
 
   filters.addEventListener('click', event => {
@@ -593,6 +650,10 @@
   });
 
   document.addEventListener('click', event => {
+    if (event.target.closest('.admin-drag-handle')) {
+      event.preventDefault();
+      return;
+    }
     const button = event.target.closest('[data-admin-action]');
     if (!button || !authenticated) return;
     if (Date.now() < suppressClickUntil) {

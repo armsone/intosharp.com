@@ -244,7 +244,10 @@
     .quick-mark.has-favicon { background: #fff; font-size: 0; }
     .site-mark img, .quick-mark img { width: 22px; height: 22px; object-fit: contain; }
     .link-copy { min-width: 0; display: block; }
-    .link-copy strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; }
+    .link-copy strong {
+      display: block; overflow: visible; text-overflow: clip; white-space: normal;
+      overflow-wrap: anywhere; word-break: keep-all; font-size: 13px; line-height: 1.3;
+    }
     .link-copy small {
       display: block; margin-top: 2px; color: var(--muted); font-size: 10px; line-height: 1.35;
       white-space: nowrap; overflow: visible; text-overflow: clip; word-break: keep-all;
@@ -324,26 +327,33 @@
       color: var(--muted); background: var(--paper-deep); font-size: 12px; cursor: pointer;
     }
     .admin-control:hover { border-color: var(--accent); color: var(--ink); }
+    .admin-control:disabled { opacity: .35; cursor: default; }
     .admin-control.admin-primary { padding-inline: 12px; color: #fff; border-color: var(--accent); background: var(--accent); }
     .admin-control.admin-danger { color: #fff; border-color: #d94c45; border-radius: 999px; background: #d94c45; font-size: 17px; line-height: 1; }
     .admin-control.admin-star { border-radius: 999px; font-size: 15px; }
     .admin-control.admin-star.active { color: #7a5800; border-color: #f1b400; background: #ffd85a; }
-    .admin-mode .card { position: relative; padding-top: 20px; }
-    .admin-mode .card-head { min-height: 36px; padding: 0 70px 0 0; cursor: grab; touch-action: none; }
-    .admin-mode .card-head:active { cursor: grabbing; }
-    .group-controls { position: absolute; top: 14px; right: 14px; z-index: 2; }
+    .admin-mode .card { position: relative; }
+    .admin-mode .card-head { min-height: 36px; }
+    .group-controls { justify-content: flex-end; margin-bottom: 10px; }
+    .group-controls .admin-control { width: 28px; padding-inline: 0; }
+    .admin-drag-handle {
+      width: 44px; min-width: 44px; height: 44px; display: grid; place-items: center; padding: 0;
+      border: 1px solid var(--line); border-radius: 10px; color: var(--muted); background: var(--paper-deep);
+      font-size: 16px; line-height: 1; cursor: grab; touch-action: none; user-select: none;
+    }
+    .admin-drag-handle:active { cursor: grabbing; }
+    .admin-drag-handle:focus-visible { outline: 3px solid var(--accent-soft); border-color: var(--accent); }
     .group-title-edit { padding: 2px 4px; border: 0; border-radius: 7px; color: inherit; background: transparent; font-weight: 800; cursor: pointer; }
     .group-title-edit:hover { color: var(--accent); background: var(--accent-soft); }
     .admin-site-row {
-      min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 4px;
-      padding: 3px 4px 3px 6px; border: 1px solid var(--line); border-radius: 14px; cursor: grab; touch-action: none;
+      min-width: 0; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 4px;
+      padding: 3px 4px 3px 6px; border: 1px solid var(--line); border-radius: 14px;
     }
-    .admin-site-row:active { cursor: grabbing; }
     .admin-site-row > a { min-width: 0; grid-template-columns: minmax(0, 1fr); padding: 6px 5px; pointer-events: none; }
     .admin-site-row > a:hover { outline: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); }
     .admin-site-row .site-mark { display: none; }
-    .site-controls { align-self: center; flex-direction: column; gap: 3px; padding: 0; }
-    .site-controls .admin-control { width: 20px; min-width: 20px; min-height: 20px; height: 20px; padding: 0; font-size: 11px; }
+    .site-controls { align-self: center; display: grid; grid-template-columns: repeat(2, 28px); gap: 4px; padding: 0; }
+    .site-controls .admin-control { width: 28px; min-width: 28px; min-height: 28px; height: 28px; padding: 0; font-size: 12px; }
     .site-controls .admin-danger { font-size: 14px; }
     .site-controls .admin-star { font-size: 11px; }
     .admin-mode [aria-grabbed="true"] { opacity: .55; }
@@ -1080,7 +1090,7 @@
       });
     })();
   </script>
-  <script src="admin.js?v=20260816-20"></script>
+  <script src="admin.js?v=20260826-1"></script>
   <script src="modern.js?v=20260816-1"></script>
 </body>
 </html>

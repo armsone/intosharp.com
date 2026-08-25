@@ -125,7 +125,10 @@ kbd { padding: 5px 8px; border: 1px solid var(--line); border-bottom-width: 2px;
 .link-list a { min-width: 0; min-height: 62px; padding: 9px 6px; display: grid; grid-template-columns: 38px minmax(0,1fr) 20px; align-items: center; gap: 12px; border-radius: 12px; transition: background .18s, transform .18s; }
 .link-list a:hover { background: var(--surface-strong); transform: translateX(3px); }
 .site-mark { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 11px; background: var(--surface-strong); color: var(--ink); font-size: 11px; font-weight: 800; }
-.link-list strong, .link-list small { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.link-list strong, .link-list small {
+  display: block; overflow: visible; white-space: normal; text-overflow: clip;
+  overflow-wrap: anywhere; word-break: keep-all;
+}
 .link-list strong { font-size: 14px; font-weight: 680; }.link-list small { margin-top: 1px; color: var(--muted); font-size: 11px; }
 .arrow { color: var(--muted); opacity: 0; transform: translate(-4px, 4px); transition: opacity .18s, transform .18s; }.link-list a:hover .arrow { opacity: 1; transform: none; }
 
