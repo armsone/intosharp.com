@@ -24,6 +24,7 @@
   <meta name="twitter:description" content="주소 대신 이름으로 이어지는 인투샾 첫 화면">
   <meta name="twitter:image" content="https://intosharp.com/assets/intosharp-representative.png">
   <link rel="canonical" href="https://intosharp.com/">
+  <link rel="preload" href="/icon-192.webp" as="image" type="image/webp">
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
   <link rel="manifest" href="/manifest.json?v=20260819-1">
@@ -412,7 +413,7 @@
 
   <header class="topbar">
     <a class="brand" href="./" aria-label="인투샾 처음으로">
-      <span class="brand-mark" aria-hidden="true">#</span>
+      <img class="brand-mark" src="/icon-192.webp" width="35" height="35" alt="인투샾 아이콘">
       <span>인투샾</span>
     </a>
     <div class="top-actions">
@@ -746,7 +747,10 @@
         if (!['http:', 'https:'].includes(target.protocol)) return;
         mark.dataset.faviconApplied = 'true';
         const image = document.createElement('img');
-        image.alt = '';
+        const label = mark.closest('a, button')?.querySelector('.link-copy strong, span:last-child')?.textContent?.trim()
+          || mark.closest('a, button')?.textContent?.trim()
+          || '바로가기';
+        image.alt = `${label} 아이콘`;
         image.loading = 'lazy';
         image.decoding = 'async';
         image.referrerPolicy = 'no-referrer';

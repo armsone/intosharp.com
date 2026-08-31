@@ -23,11 +23,14 @@ UPLOADS = (
     (PROJECT_ROOT / "favicon-32.png", "www/favicon-32.png"),
     (PROJECT_ROOT / "apple-touch-icon.png", "www/apple-touch-icon.png"),
     (PROJECT_ROOT / "icon-192.png", "www/icon-192.png"),
+    (PROJECT_ROOT / "icon-192.webp", "www/icon-192.webp"),
     (PROJECT_ROOT / "icon-512.png", "www/icon-512.png"),
     (PROJECT_ROOT / "assets" / "intosharp-representative.png", "www/assets/intosharp-representative.png"),
     (PROJECT_ROOT / "modern.js", "www/modern.js"),
     (PROJECT_ROOT / "sw.js", "www/sw.js"),
     (PROJECT_ROOT / "manifest.json", "www/manifest.json"),
+    (PROJECT_ROOT / "robots.txt", "www/robots.txt"),
+    (PROJECT_ROOT / "sitemap.xml", "www/sitemap.xml"),
 )
 
 
