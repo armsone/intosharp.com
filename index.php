@@ -413,7 +413,7 @@
 
   <header class="topbar">
     <a class="brand" href="./" aria-label="인투샾 처음으로">
-      <img class="brand-mark" src="/icon-192.webp" width="35" height="35" alt="인투샾 아이콘">
+      <img class="brand-mark" src="/icon-192.webp" width="35" height="35" alt="인투샾 아이콘" loading="lazy" decoding="async">
       <span>인투샾</span>
     </a>
     <div class="top-actions">
@@ -735,33 +735,7 @@
         });
       }
 
-      function applyFavicon(mark, url) {
-        if (!mark || mark.dataset.faviconApplied) return;
-        const pageIcon = document.querySelector('link[rel~="icon"]')?.href;
-        let target;
-        try {
-          target = new URL(url, window.location.href);
-        } catch (_) {
-          return;
-        }
-        if (!['http:', 'https:'].includes(target.protocol)) return;
-        mark.dataset.faviconApplied = 'true';
-        const image = document.createElement('img');
-        const label = mark.closest('a, button')?.querySelector('.link-copy strong, span:last-child')?.textContent?.trim()
-          || mark.closest('a, button')?.textContent?.trim()
-          || '바로가기';
-        image.alt = `${label} 아이콘`;
-        image.loading = 'lazy';
-        image.decoding = 'async';
-        image.referrerPolicy = 'no-referrer';
-        image.addEventListener('load', () => mark.classList.add('has-favicon'), { once: true });
-        image.addEventListener('error', () => image.remove(), { once: true });
-        const faviconOrigin = target.protocol === 'http:' ? `https://${target.host}` : target.origin;
-        image.src = target.origin === window.location.origin && pageIcon
-          ? pageIcon
-          : new URL('/favicon.ico', faviconOrigin).href;
-        mark.appendChild(image);
-      }
+      function applyFavicon() {}
 
       function applyFavicons(root = document) {
         const links = root.matches?.('a') && root.querySelector('.site-mark') ? [root] : root.querySelectorAll('.link-list a');
