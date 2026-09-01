@@ -1,4 +1,4 @@
-const CACHE_NAME = 'intosh-shell-20260826-1';
+const CACHE_NAME = 'intosh-shell-20260901-1';
 const SHELL_FILES = [
   '/',
   '/favicon-32.png',
@@ -33,13 +33,28 @@ self.addEventListener('fetch', event => {
 
   if (request.mode === 'navigate') {
     event.respondWith(
-      fetch(request)
+      fetch(request, { cache: 'no-store' })
         .then(response => {
           const copy = response.clone();
           caches.open(CACHE_NAME).then(cache => cache.put('/', copy));
           return response;
         })
         .catch(() => caches.match('/')),
+    );
+    return;
+  }
+
+  if (request.destination === 'style' || request.destination === 'script') {
+    event.respondWith(
+      fetch(request, { cache: 'no-store' })
+        .then(response => {
+          if (response.ok) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
+          }
+          return response;
+        })
+        .catch(() => caches.match(request)),
     );
     return;
   }
