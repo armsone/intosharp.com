@@ -25,8 +25,8 @@
   <meta name="twitter:image" content="https://intosharp.com/assets/intosharp-representative.png">
   <link rel="canonical" href="https://intosharp.com/">
   <link rel="preload" href="/icon-192.webp" as="image" type="image/webp">
-  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+  <link rel="icon" href="/favicon-32.png?v=20260904" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=20260904" sizes="180x180">
   <link rel="manifest" href="/manifest.json?v=20260819-1">
   <title>#인투샾 — 이름으로 여는 첫 화면</title>
   <style>
