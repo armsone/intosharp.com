@@ -19,6 +19,7 @@ UPLOADS = (
     (PROJECT_ROOT / "legacy-catalog.js", "www/legacy-catalog.js"),
     (PROJECT_ROOT / "admin.js", "www/admin.js"),
     (PROJECT_ROOT / "admin-api.php", "www/admin-api.php"),
+    (PROJECT_ROOT / "personal.js", "www/personal.js"),
     (PROJECT_ROOT / "favicon.svg", "www/favicon.svg"),
     (PROJECT_ROOT / "favicon-32.png", "www/favicon-32.png"),
     (PROJECT_ROOT / "apple-touch-icon.png", "www/apple-touch-icon.png"),

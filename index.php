@@ -360,6 +360,77 @@
     .admin-mode [aria-grabbed="true"] { opacity: .55; }
     .admin-drop-target { outline: 2px dashed var(--accent); outline-offset: 3px; }
 
+    .personal { margin-top: 18px; padding: 22px 24px; border: 1px solid var(--line); border-radius: 24px; background: var(--card); box-shadow: 0 8px 30px rgba(58, 49, 36, .04); }
+    .personal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+    .personal-head h2 { margin: 0; font-size: 20px; letter-spacing: -.035em; }
+    .personal-head p { margin: 6px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .personal-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+    .personal-actions .admin-control { min-height: 32px; padding-inline: 11px; }
+    .personal-tabs { display: flex; gap: 6px; overflow-x: auto; margin: 16px 0 10px; padding-bottom: 2px; }
+    .personal-tabs button {
+      white-space: nowrap; border: 1px solid var(--line); border-radius: 999px;
+      padding: 8px 13px; background: transparent; color: var(--muted); font-size: 13px; cursor: pointer;
+    }
+    .personal-tabs button.active { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+    .personal-tools { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px; align-items: center; margin-bottom: 12px; }
+    .personal-tools input[type="search"], .personal-tools select {
+      min-width: 0; padding: 9px 12px; border: 1px solid var(--line); border-radius: 11px;
+      color: var(--ink); background: var(--paper); font-size: 13px; outline: none;
+    }
+    .personal-tools input[type="search"]:focus, .personal-tools select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .personal-count { color: var(--muted); font-size: 12px; white-space: nowrap; }
+    .personal-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+    .personal-row {
+      min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 4px;
+      padding: 3px 4px 3px 2px; border: 1px solid var(--line); border-radius: 14px;
+    }
+    .personal-row > a {
+      min-width: 0; display: grid; grid-template-columns: 32px minmax(0, 1fr); align-items: center; gap: 6px;
+      padding: 6px 6px; border-radius: 12px; transition: background .15s ease;
+    }
+    .personal-row > a:hover { background: var(--paper-deep); }
+    .personal-todo {
+      grid-column: 1 / -1; display: flex; align-items: flex-start; gap: 7px; margin: 0 6px 6px 8px;
+      color: var(--ink); font-size: 12px; line-height: 1.4; cursor: pointer;
+    }
+    .personal-todo input { margin: 2px 0 0; accent-color: var(--accent); }
+    .personal-todo.done span { color: var(--muted); text-decoration: line-through; }
+    .personal-controls { display: grid; grid-auto-flow: column; gap: 4px; }
+    .personal-controls .admin-control { width: 28px; min-width: 28px; height: 28px; min-height: 28px; padding: 0; font-size: 12px; }
+    .personal-controls .admin-danger { font-size: 14px; }
+    .personal-empty { margin: 4px 0 0; padding: 18px; border: 1px dashed var(--line); border-radius: 14px; color: var(--muted); font-size: 13px; text-align: center; }
+    .personal-empty[hidden] { display: none; }
+    .personal-note { margin: 14px 0 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .personal-dialog { width: min(520px, calc(100vw - 32px)); max-height: calc(100vh - 32px); overflow: auto; }
+    .personal-dialog .login-form textarea { width: 100%; padding: 12px 13px; border: 1px solid var(--line); border-radius: 11px; color: var(--ink); background: var(--paper); font: inherit; outline: none; resize: vertical; }
+    .personal-dialog .login-form textarea:focus, .personal-dialog .login-form select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .personal-dialog .login-form select { width: 100%; padding: 12px 13px; border: 1px solid var(--line); border-radius: 11px; color: var(--ink); background: var(--paper); font: inherit; outline: none; }
+    .personal-dialog-body { display: grid; gap: 14px; }
+    .personal-dialog-note { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
+    .personal-dialog-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .personal-dialog-row .admin-control { min-height: 34px; padding-inline: 12px; }
+    .personal-dialog-danger { padding-top: 10px; border-top: 1px solid var(--line); }
+    .personal-file { display: grid; gap: 8px; color: var(--muted); font-size: 12px; }
+    .personal-file input { font-size: 13px; color: var(--ink); }
+    .personal-preview { display: grid; gap: 8px; padding: 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--paper); }
+    .personal-preview h3 { margin: 0; font-size: 14px; }
+    .personal-preview p { margin: 0; color: var(--muted); font-size: 12px; }
+    .personal-preview ul { margin: 0; padding-left: 18px; font-size: 12px; line-height: 1.5; }
+    .personal-fallback { display: grid; gap: 8px; }
+    .personal-fallback p { margin: 0; color: var(--muted); font-size: 12px; }
+    .personal-fallback textarea { width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 11px; color: var(--ink); background: var(--paper); font-size: 11px; font-family: ui-monospace, monospace; }
+    .personal-dupe { display: grid; gap: 6px; margin: 0 0 10px; padding: 10px 12px 12px; border: 1px solid var(--line); border-radius: 12px; }
+    .personal-dupe legend { padding: 0 4px; color: var(--muted); font-size: 11px; overflow-wrap: anywhere; }
+    .personal-dupe label { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; line-height: 1.4; cursor: pointer; }
+    .personal-dupe input { margin-top: 3px; accent-color: var(--accent); }
+    .personal-undo {
+      position: fixed; left: 50%; bottom: 24px; z-index: 21; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 12px; padding: 10px 12px 10px 16px; border-radius: 12px;
+      color: var(--paper); background: var(--ink); font-size: 13px; box-shadow: var(--shadow);
+    }
+    .personal-undo[hidden] { display: none; }
+    .personal-undo button { padding: 6px 10px; border: 0; border-radius: 8px; color: var(--ink); background: var(--paper); font-weight: 700; cursor: pointer; }
+
     @supports (content-visibility: auto) {
       .card, .archive-card, .legacy { content-visibility: auto; contain-intrinsic-size: auto 360px; }
     }
@@ -401,6 +472,11 @@
       .admin-account strong { display: none; }
       .admin-account { gap: 3px; }
       .admin-site-row { grid-template-columns: auto minmax(0, 1fr) auto; }
+      .personal { padding: 18px 14px; }
+      .personal-tools { grid-template-columns: 1fr; }
+      .personal-count { text-align: right; }
+      .personal-list { grid-template-columns: 1fr; }
+      .personal-undo { width: calc(100% - 28px); justify-content: space-between; }
       footer { gap: 12px; flex-direction: column; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -448,6 +524,39 @@
         <p>첫 화면에서 먼저 만나는 이음말</p>
       </div>
       <div class="word-chips" id="welcomeWords"></div>
+    </section>
+
+    <section class="personal" id="personal" aria-labelledby="personalTitle">
+      <div class="personal-head">
+        <div>
+          <h2 id="personalTitle">내 이음말</h2>
+          <p>로그인 없이 내가 직접 넣는 링크판입니다. 매일·가끔·업무처럼 판을 나누고, 링크마다 메모와 다음 할 일을 적어 둡니다. 검색줄에 링크 이름을 치면 바로 열립니다.</p>
+        </div>
+        <div class="personal-actions">
+          <button class="admin-control admin-primary" id="personalAddLink" type="button">＋ 링크 추가</button>
+          <button class="admin-control" id="personalAddBoard" type="button">판 추가</button>
+          <button class="admin-control" id="personalRenameBoard" type="button">판 이름</button>
+          <button class="admin-control" id="personalDeleteBoard" type="button">판 삭제</button>
+          <button class="admin-control" id="personalDedupe" type="button">중복 정리</button>
+          <button class="admin-control" id="personalBackup" type="button">백업·복원</button>
+        </div>
+      </div>
+      <div class="personal-tabs" id="personalTabs" role="tablist" aria-label="내 이음말 판 선택"></div>
+      <div class="personal-tools">
+        <label for="personalSearch" style="position:absolute;clip:rect(0 0 0 0);clip-path:inset(50%);width:1px;height:1px;overflow:hidden">내 이음말 검색</label>
+        <input id="personalSearch" type="search" placeholder="모든 판에서 이름·주소·메모 검색" autocomplete="off">
+        <label for="personalSort" style="position:absolute;clip:rect(0 0 0 0);clip-path:inset(50%);width:1px;height:1px;overflow:hidden">정렬</label>
+        <select id="personalSort">
+          <option value="manual">내 순서</option>
+          <option value="name">이름순</option>
+          <option value="added">추가순</option>
+          <option value="opened">최근 연 순</option>
+        </select>
+        <span class="personal-count" id="personalCount" aria-live="polite"></span>
+      </div>
+      <div class="personal-list" id="personalList"></div>
+      <p class="personal-empty" id="personalEmpty" hidden></p>
+      <p class="personal-note">이 브라우저에만 저장되며 서버로 보내지 않습니다. 사이트 데이터를 지우면 함께 사라지므로 백업·복원에서 파일로 내보내 두세요. 다른 기기와 자동으로 맞춰지지 않습니다.</p>
     </section>
 
     <section id="bookmarks" aria-labelledby="bookmarksTitle">
@@ -612,6 +721,40 @@
 
   <footer><span>#인투샾</span><span>이름으로 여는 나의 첫 화면</span></footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="personal-undo" id="personalUndo" role="status" aria-live="polite" hidden>
+    <span id="personalUndoText"></span>
+    <button id="personalUndoButton" type="button">되돌리기</button>
+  </div>
+  <dialog class="login-dialog personal-dialog" id="personalLinkDialog" aria-labelledby="personalLinkTitle">
+    <form class="login-form" id="personalLinkForm" method="dialog">
+      <h2 id="personalLinkTitle">내 이음말 추가</h2>
+      <p>이 브라우저에만 저장됩니다. 주소는 http 또는 https만 넣을 수 있습니다.</p>
+      <label>주소<input id="personalLinkUrl" type="text" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="https://" maxlength="2000" required></label>
+      <label>이름<input id="personalLinkName" type="text" autocomplete="off" maxlength="100" placeholder="비우면 주소로 채웁니다"></label>
+      <label>메모 한 줄<input id="personalLinkNote" type="text" autocomplete="off" maxlength="200" placeholder="예: 매주 월요일 정산 확인"></label>
+      <label>다음 할 일<input id="personalLinkTodo" type="text" autocomplete="off" maxlength="200" placeholder="예: 8월 세금계산서 발행 (완료 체크 가능)"></label>
+      <label>판<select id="personalLinkBoard"></select></label>
+      <p class="login-error" id="personalLinkError" role="alert"></p>
+      <div class="login-actions">
+        <button id="personalLinkCancel" type="button">취소</button>
+        <button type="submit">저장</button>
+      </div>
+    </form>
+  </dialog>
+  <dialog class="login-dialog personal-dialog" id="personalBackupDialog" aria-labelledby="personalBackupTitle">
+    <div class="login-form">
+      <h2 id="personalBackupTitle">백업·복원</h2>
+      <div class="personal-dialog-body" id="personalBackupBody"></div>
+      <div class="login-actions"><button id="personalBackupClose" type="button">닫기</button></div>
+    </div>
+  </dialog>
+  <dialog class="login-dialog personal-dialog" id="personalDedupeDialog" aria-labelledby="personalDedupeTitle">
+    <div class="login-form">
+      <h2 id="personalDedupeTitle">중복 정리</h2>
+      <div class="personal-dialog-body" id="personalDedupeBody"></div>
+      <div class="login-actions"><button id="personalDedupeClose" type="button">닫기</button></div>
+    </div>
+  </dialog>
   <dialog class="login-dialog" id="adminLoginDialog" aria-labelledby="adminLoginTitle">
     <form class="login-form" id="adminLoginForm" method="dialog">
       <h2 id="adminLoginTitle">관리자 로그인</h2>
@@ -695,6 +838,16 @@
         const name = firstSpace === -1 ? value : value.slice(0, firstSpace);
         const query = firstSpace === -1 ? '' : value.slice(firstSpace).trim();
         const serviceKey = Object.keys(services).find(key => key.toLocaleLowerCase('ko-KR') === name.toLocaleLowerCase('ko-KR'));
+
+        // 입력 전체가 내 이음말 이름과 정확히 같으면 바로 연다. 공백이 든 이름("우리 은행")도 포함.
+        // 단, "네이버 날씨"처럼 첫 단어가 포털 이름이고 검색어가 이어지면 포털 검색을 우선한다.
+        if (!query || !serviceKey) {
+          const personalUrl = window.intoSharpPersonal?.resolveAlias(value);
+          if (personalUrl) {
+            openInNewTab(personalUrl);
+            return;
+          }
+        }
 
         if (serviceKey) {
           const [home, search] = services[serviceKey];
@@ -1069,6 +1222,7 @@
     })();
   </script>
   <script src="admin.js?v=20260826-1"></script>
+  <script src="personal.js?v=20260913-1"></script>
   <script src="modern.js?v=20260816-1"></script>
 </body>
 </html>

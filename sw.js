@@ -1,4 +1,4 @@
-const CACHE_NAME = 'intosh-shell-20260901-1';
+const CACHE_NAME = 'intosh-shell-20260913-1';
 const SHELL_FILES = [
   '/',
   '/favicon-32.png',
@@ -8,6 +8,7 @@ const SHELL_FILES = [
   '/assets/intosharp-representative.png',
   '/legacy-catalog.js?v=20260816-3',
   '/admin.js?v=20260826-1',
+  '/personal.js?v=20260913-1',
   '/modern.js?v=20260816-1',
   '/manifest.json?v=20260819-1',
 ];
