@@ -927,7 +927,17 @@
         });
       }
 
-      function applyFavicon() {}
+      function applyFavicon(mark, url) {
+        if (!mark || !url || mark.querySelector('img')) return;
+        const image = document.createElement('img');
+        image.src = `https://www.google.com/s2/favicons?domain_url=${encodeURIComponent(url)}&sz=64`;
+        image.alt = '';
+        image.loading = 'lazy';
+        image.decoding = 'async';
+        image.addEventListener('error', () => image.remove(), { once: true });
+        mark.appendChild(image);
+        mark.classList.add('has-favicon');
+      }
 
       function applyFavicons(root = document) {
         const links = root.matches?.('a') && root.querySelector('.site-mark') ? [root] : root.querySelectorAll('.link-list a');
