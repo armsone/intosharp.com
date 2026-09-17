@@ -438,6 +438,36 @@
     @view-transition { navigation: auto; }
     ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .18s; }
 
+    .top-nav { display: flex; gap: 24px; margin-left: auto; margin-right: 28px; color: var(--muted); font-size: 12px; }
+    .top-nav a { position: relative; padding: 5px 0; }
+    .top-nav a::after { content: ''; position: absolute; left: 0; right: 100%; bottom: 0; height: 1px; background: var(--accent); transition: right .2s ease; }
+    .top-nav a:hover { color: var(--ink); }
+    .top-nav a:hover::after { right: 0; }
+    .hero { padding-top: 84px; text-align: left; }
+    .hero h1 { font-size: clamp(48px, 8vw, 94px); font-weight: 500; }
+    .hero h1 em { color: var(--accent); font-style: normal; }
+    .hero-copy { margin-left: 0; }
+    .command { margin-left: 0; }
+    .command-help { text-align: left; }
+    .hero-note { display: flex; align-items: center; gap: 9px; margin-top: 34px; color: var(--muted); font-size: 11px; letter-spacing: .02em; }
+    .hero-note span { color: var(--accent); font-variant-numeric: tabular-nums; }
+    .hero-note b { color: var(--ink); font-weight: 700; }
+    .section-head { border-top: 1px solid var(--line); padding-top: 30px; }
+    .section-head h2, .archive-head h2 { font-weight: 500; }
+    .cards { counter-reset: catalog; }
+    .card { position: relative; overflow: hidden; border-radius: 8px; }
+    .card::before { counter-increment: catalog; content: '0' counter(catalog); position: absolute; top: 18px; right: 22px; color: var(--muted); font-size: 10px; letter-spacing: .12em; }
+    .card:hover { border-color: color-mix(in srgb, var(--accent) 58%, var(--line)); box-shadow: 0 16px 38px rgba(58, 49, 36, .09); }
+    .card-head { padding-right: 34px; }
+    .link-list a { border-radius: 8px; }
+    .filters button { border: 1px solid transparent; border-radius: 999px; }
+    .filters button.active { border-color: var(--ink); }
+    @media (max-width: 620px) {
+      .top-nav { display: none; }
+      .hero { padding-top: 54px; }
+      .hero-note { margin-top: 26px; }
+    }
+
     @media (max-width: 1000px) {
       .combined-layout { grid-template-columns: 1fr; }
       .side-words { grid-template-columns: repeat(2, minmax(0, 1fr)); position: static; }
@@ -492,6 +522,11 @@
       <img class="brand-mark" src="/icon-192.webp" width="35" height="35" alt="인투샾 아이콘" loading="lazy" decoding="async">
       <span>인투샾</span>
     </a>
+    <nav class="top-nav" aria-label="페이지 이동">
+      <a href="#bookmarks">이음말</a>
+      <a href="#personal">내 링크</a>
+      <a href="#legacyTitle">만든 뜻</a>
+    </nav>
     <div class="top-actions">
       <button class="admin-login-button" id="adminLoginButton" type="button">관리자 로그인</button>
       <time id="clock" aria-label="현재 시각"></time>
@@ -501,9 +536,9 @@
 
   <main>
     <section class="hero" aria-labelledby="mainTitle">
-      <p class="kicker">이름이 곧 주소입니다</p>
-      <h1 id="mainTitle">이름만 기억하세요.</h1>
-      <p class="hero-copy">주소를 외우지 않아도 됩니다. <strong>#이름</strong>으로 바로 가세요.</p>
+      <p class="kicker">PERSONAL LINK CATALOG · 2026</p>
+      <h1 id="mainTitle">자주 가는 곳을<br><em>한눈에.</em></h1>
+      <p class="hero-copy">주소 대신 이름을 고르고, 필요한 곳으로 바로 이동하세요.</p>
 
       <form class="command" id="commandForm" role="search" autocomplete="off">
         <span class="command-prefix" aria-hidden="true">#</span>
@@ -515,6 +550,10 @@
         <button class="example" type="button" data-example="네이버">네이버</button>는 바로 이동,
         <button class="example" type="button" data-example="네이버 우리집">네이버 우리집</button>은 네이버에서 검색
       </p>
+
+      <div class="hero-note" aria-label="인투샾 사용 안내">
+        <span>01</span><b>찾고</b><span>02</span><b>고르고</b><span>03</span><b>바로 갑니다</b>
+      </div>
 
     </section>
 
